@@ -1,5 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  webpack: (config, { isServer }) => {
+    if (isServer) {
+      config.externals.push({
+        '@prisma/client': 'commonjs @prisma/client',
+      });
+    }
+    return config;
+  },
   images: {
     remotePatterns: [
       {
