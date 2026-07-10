@@ -5,16 +5,19 @@ import { IconType } from "react-icons";
 interface CategoriesInputProps {
   selected?: boolean;
   label: string;
-  icon: IconType;
+  icon?: IconType | string | null;
   onClick: (value: string) => void;
 }
 
 const CategoriesInput: React.FC<CategoriesInputProps> = ({
   selected,
   label,
-  icon: Icon,
+  icon,
   onClick,
 }) => {
+  const isString = typeof icon === "string";
+  const IconComponent = !isString && icon ? (icon as IconType) : null;
+
   return (
     <div
       onClick={() => onClick(label)}
@@ -23,8 +26,12 @@ const CategoriesInput: React.FC<CategoriesInputProps> = ({
     ${selected ? "border-slate-500" : "border-slate-200"}
     `}
     >
-      <Icon size={30} />
-      <div className="font-medium">{label}</div>
+      {isString ? (
+        <span className="text-[30px] leading-none">{icon}</span>
+      ) : IconComponent ? (
+        <IconComponent size={30} />
+      ) : null}
+      <div className="font-medium text-center text-sm">{label}</div>
     </div>
   );
 };

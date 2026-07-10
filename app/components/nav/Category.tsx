@@ -41,8 +41,8 @@ const Category: React.FC<CategoryProps> = ({ label, icon: Icon, selected }) => {
         group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium
         transition-all duration-300 whitespace-nowrap cursor-pointer
         ${selected
-          ? 'bg-gray-900 text-white shadow-sm'
-          : 'bg-transparent text-gray-500 hover:bg-gray-100 hover:text-gray-800'
+          ? 'bg-[#a0856a] text-white shadow-sm'
+          : 'bg-transparent text-[#a0856a] hover:bg-[#f5ebd9] hover:text-[#5c4a3d]'
         }
       `}
     >

@@ -4,9 +4,9 @@ import CartCount from "./CartCount";
 import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
 import Categories from "./Categories";
-import SearchBar from "./SearchBar";
 import Image from "next/image";
 import Banner from "./Banner";
+import Menu from "./Menu ";
 
 const NavBar = async () => {
   const currentUser = await getCurrentUser();
@@ -14,7 +14,7 @@ const NavBar = async () => {
   return (
     <div className="relative">
       {/* Main sticky nav */}
-      <div className="sticky top-0 w-full z-30 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm">
+      <div className="sticky top-0 w-full z-30 bg-[#fdf8f3]/90 backdrop-blur-md border-b border-[#e8ddd3] shadow-sm">
         <Container>
           {/* Top row: Logo | Search | Actions */}
           <div className="flex items-center justify-between gap-4 py-3">
@@ -23,15 +23,10 @@ const NavBar = async () => {
               <div className="relative w-9 h-9 transition-transform duration-300 group-hover:rotate-12">
                 <Image src="/react.gif" fill alt="Logo" className="object-contain" />
               </div>
-              <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-gray-900 to-blue-600 bg-clip-text text-transparent select-none">
+              <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-[#5c4a3d] to-[#a0856a] bg-clip-text text-transparent select-none">
                 APPLE
               </span>
             </Link>
-
-            {/* Search – centered */}
-            <div className="hidden md:flex flex-1 max-w-xl mx-4">
-              <SearchBar />
-            </div>
 
             {/* Right actions */}
             <div className="flex items-center gap-4">
@@ -44,8 +39,8 @@ const NavBar = async () => {
         </Container>
 
         {/* Category bar */}
-        <div className="border-t border-gray-100 bg-white/60 backdrop-blur-sm">
-          <Categories />
+        <div className="border-t border-[#e8ddd3] bg-[#fdf8f3]/80 backdrop-blur-sm">
+          <Menu />
         </div>
       </div>
 

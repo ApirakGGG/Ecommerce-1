@@ -18,10 +18,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   return (
     <div
       onClick={() => router.push(`product/${data.id}`)}
-      className="group col-span-1 cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-gray-100 hover:border-blue-200 transition-all duration-300 hover:-translate-y-1"
+      className="group col-span-1 cursor-pointer bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl border border-[#e8ddd3] hover:border-[#d6c4b0] transition-all duration-300 hover:-translate-y-1"
     >
       {/* Image area */}
-      <div className="relative aspect-square overflow-hidden bg-gray-50">
+      <div className="relative aspect-square overflow-hidden bg-[#fdf8f3]">
         <Image
           fill
           src={data.images[0].image}
@@ -41,26 +41,26 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
       </div>
 
       {/* Info area */}
-      <div className="flex flex-col gap-1.5 p-4 border-t border-gray-50">
-        <p className="text-xs text-gray-400 uppercase tracking-widest font-medium">
+      <div className="flex flex-col gap-1.5 p-4 border-t border-[#e8ddd3]">
+        <p className="text-xs text-[#a0856a] uppercase tracking-widest font-medium">
           {data.brand}
         </p>
-        <h3 className="font-semibold text-gray-900 text-sm line-clamp-2 leading-snug group-hover:text-blue-600 transition-colors">
+        <h3 className="font-semibold text-[#4a3b2c] text-sm line-clamp-2 leading-snug group-hover:text-[#a0856a] transition-colors">
           {data.name}
         </h3>
 
         <div className="flex items-center gap-1.5 mt-0.5">
           <StarRating value={productRating} size="small" precision={0.5} />
-          <span className="text-xs text-gray-400">
+          <span className="text-xs text-[#a0856a]">
             ({data.reviews.length})
           </span>
         </div>
 
         <div className="flex items-center justify-between mt-1">
-          <span className="text-base font-bold text-gray-900">
+          <span className="text-base font-bold text-[#4a3b2c]">
             {formatPrice(data.price)}
           </span>
-          <span className="text-xs text-blue-500 font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <span className="text-xs text-[#a0856a] font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
             View →
           </span>
         </div>
