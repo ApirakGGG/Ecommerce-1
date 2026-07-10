@@ -1,17 +1,17 @@
-"use client"
+"use client";
 import Button from "@/app/components/products/Button";
 import ProductImage from "@/app/components/products/ProductImage";
 import SetColor from "@/app/components/products/SetColor";
 import SetQuantity from "@/app/components/products/SetQuantity";
 import StarRating from "@/app/components/products/StarRating";
-import {  useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useCart } from "@/hooks/useCart";
 import { MdCheckCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 interface ProductDetailsProps {
   product: any;
-  id: String
+  id: String;
 }
 
 export type CartProductType = {
@@ -57,7 +57,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
 
     if (cartProducts) {
       const existingIndex = cartProducts.findIndex(
-        (item) => item.id === product.id
+        (item) => item.id === product.id,
       );
 
       if (existingIndex > -1) {
@@ -77,7 +77,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
       });
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cartProduct.selectedImg]
+    [cartProduct.selectedImg],
   );
 
   const handleQtyIncrease = useCallback(() => {
@@ -108,8 +108,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         product={product}
         handleColorSelect={handleColorSelect}
       />
-      <div className="flex flex-col gap-1 text-slate-500 text-sm">
-        <h2 className="text-3xl font-medium text-slate-700">{product.name}</h2>
+      <div className="flex flex-col gap-1 text-[#a0856a] text-sm">
+        <h2 className="text-3xl font-bold text-[#4a3b2c]">{product.name}</h2>
         <div className="flex items-center gap-2">
           <StarRating value={productRating} />
           <div>{product.reviews.length} reviews</div>
@@ -118,12 +118,10 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <div className="text-justify">{product.description}</div>
         <Horizontal />
         <div className="">
-          <span className="font-semibold">CATEGORY:</span>
-          {product.category}
+          <span className="font-semibold flex gap-2">CATEGORY: <p className="font-bold">{product.category}</p></span>
         </div>
         <div className="">
-          <span className="font-semibold">BRAND:</span>
-          {product.brand}
+          <span className="font-semibold flex gap-2">BRAND: <p className="font-bold">{product.brand}</p></span>
         </div>
         <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
           {product.inStock ? "In Stock" : "Out of Stock"}
