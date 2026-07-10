@@ -114,3 +114,15 @@ enum Role {
   USER
   ADMIN
 }
+
+model Category {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  label String @unique
+  icon  String?
+}
+
+model Color {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  color     String @unique
+  colorCode String
+}

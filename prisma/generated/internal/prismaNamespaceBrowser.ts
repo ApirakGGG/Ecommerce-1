@@ -53,7 +53,9 @@ export const ModelName = {
   User: 'User',
   Product: 'Product',
   Review: 'Review',
-  order: 'order'
+  order: 'order',
+  Category: 'Category',
+  Color: 'Color'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -132,6 +134,24 @@ export const OrderScalarFieldEnum = {
 } as const
 
 export type OrderScalarFieldEnum = (typeof OrderScalarFieldEnum)[keyof typeof OrderScalarFieldEnum]
+
+
+export const CategoryScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  icon: 'icon'
+} as const
+
+export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
+
+
+export const ColorScalarFieldEnum = {
+  id: 'id',
+  color: 'color',
+  colorCode: 'colorCode'
+} as const
+
+export type ColorScalarFieldEnum = (typeof ColorScalarFieldEnum)[keyof typeof ColorScalarFieldEnum]
 
 
 export const SortOrder = {

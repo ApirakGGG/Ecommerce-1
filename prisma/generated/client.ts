@@ -84,3 +84,13 @@ export type Review = Prisma.ReviewModel
  * 
  */
 export type order = Prisma.orderModel
+/**
+ * Model Category
+ * 
+ */
+export type Category = Prisma.CategoryModel
+/**
+ * Model Color
+ * 
+ */
+export type Color = Prisma.ColorModel
