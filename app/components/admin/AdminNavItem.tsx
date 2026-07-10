@@ -13,12 +13,20 @@ const AdminNavItem: React.FC<AdminNavItemProps> = ({
 }) => {
   return (
     <div
-      className={`flex items-center justify-center text-center gap-1 p-2
-  border-b-2 hover:text-slate-800 transition cursor-pointer ${selected ? 
-    "border-b-slate-800 text-slate-800" : "border-transparent text-slate-500"}`}>
-    <Icon size={20} />
-    <div className="font-medium text-sm text-center break-normal">{label}</div>
-    </div> );
+      className={`
+        flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold
+        transition-all duration-200 cursor-pointer whitespace-nowrap
+        ${
+          selected
+            ? "bg-[#a0856a] text-white shadow-sm"
+            : "text-[#a0856a] hover:text-[#5c4a3d] hover:bg-[#f5ebd9]"
+        }
+      `}
+    >
+      <Icon size={16} />
+      <span>{label}</span>
+    </div>
+  );
 };
 
 export default AdminNavItem;
