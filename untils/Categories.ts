@@ -1,25 +1,26 @@
-import { AiFillPhone, AiOutlineLaptop } from "react-icons/ai";
-import { MdOutlineKeyboard, MdStorefront, MdWatch } from "react-icons/md";
+import { MdStorefront} from "react-icons/md";
+import { IoShirt } from "react-icons/io5";
+import { GiSkirt , GiLargeDress, GiTrousers   } from "react-icons/gi";
 
 export const categories = [
   {
-    label: "All",
+    label: "ทั้งหมด",
     icon: MdStorefront,
   },
   {
-    label: "Phone",
-    icon: AiFillPhone,
+    label: "เสื้อ",
+    icon: IoShirt,
+  },
+   {
+    label: "กางเกง",
+    icon: GiTrousers ,
   },
   {
-    label: "Laptop",
-    icon: AiOutlineLaptop,
+    label: "กระโปรง",
+    icon: GiSkirt,
   },
   {
-    label: "Watch",
-    icon: MdWatch,
-  },
-  {
-    label: "Accesories",
-    icon: MdOutlineKeyboard,
+    label: "เดรส",
+    icon: GiLargeDress,
   },
 ];
