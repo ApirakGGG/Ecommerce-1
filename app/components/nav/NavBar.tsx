@@ -18,7 +18,7 @@ const NavBar = async () => {
           <div className="flex items-center justify-between gap-4 py-3">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="relative w-20 h-20 transition-transform duration-300 group-hover:rotate-12">
+              <div className="hidden md:block relative w-20 h-20 transition-transform duration-300 group-hover:rotate-12">
                 <Image src="/logo.png" alt="Logo" className="object-contain" width={500} height={500} />
               </div>
               <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-[#5c4a3d] to-[#a0856a] bg-clip-text text-transparent select-none">
