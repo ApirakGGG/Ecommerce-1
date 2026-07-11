@@ -40,7 +40,7 @@ const StarRating: React.FC<StarRatingProps> = ({
             {/* Filled overlay */}
             {(filled || halfFilled) && (
               <span
-                className="absolute inset-0 text-amber-400 overflow-hidden"
+                className="absolute inset-0 text-amber-400 overflow-hidden pointer-events-none"
                 style={{ width: filled ? "100%" : "50%" }}
               >
                 ★

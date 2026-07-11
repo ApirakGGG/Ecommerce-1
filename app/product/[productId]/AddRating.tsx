@@ -31,6 +31,7 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
     handleSubmit,
     setValue,
     reset,
+    watch,
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -38,6 +39,8 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
       rating: 0,
     },
   });
+
+  const ratingValue = watch("rating");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -91,7 +94,7 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
     <div className="flex flex-col gap-2 max-w-[500px] font-bold">
       <Heading title="Rating this Product" />
       <StarRating
-        value={0}
+        value={ratingValue}
         readOnly={false}
         onChange={(newValue) => {
           setCustomValue("rating", newValue);
