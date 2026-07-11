@@ -102,8 +102,8 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   );
 
   return (
-    <Popover className="relative  z-30 ">
-      <Popover.Button className="inline-flex  items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 mt-1 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
+    <Popover className="relative z-10 ">
+      <Popover.Button className="inline-flex z-10  items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 mt-1 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
         <Avatar src={currentUser?.image} />
         <span className="font-semibold ml-3">{currentUser?.name}</span>
         <ChevronDownIcon
