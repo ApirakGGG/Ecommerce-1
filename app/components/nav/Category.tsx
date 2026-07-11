@@ -17,7 +17,7 @@ const Category: React.FC<CategoryProps> = ({ label, icon: Icon, selected }) => {
   const params = useSearchParams()
 
   const handleClick = useCallback(() => {
-    if (label === 'All') {
+    if (label === 'ทั้งหมด') { //pathname แรก
       router.push('/')
     } else {
       let currentQuery = {};
