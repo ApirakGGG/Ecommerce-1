@@ -3,12 +3,32 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { FaInstagram } from "react-icons/fa";
 
 const slides = [
+   {
+    id: 1,
+    badge: "Members Only",
+    title: "JOIN",
+    highlight: "US NOW",
+    subtitle: "Sign up and unlock exclusive discounts.",
+    sub2: "Early access to new collections.",
+    ctaHref: "/register",
+    image: "/logo.png",
+    bg: "from-[#f9f0e3] via-[#f0e4d0] to-[#e8d5ba]",
+    badgeColor: "bg-[#8b5e3c]/15 border-[#8b5e3c]/30 text-[#5c3d1e]",
+    dotColor: "bg-[#c8a882]",
+    titleColor: "text-[#3d2a1a]",
+    highlightFrom: "from-[#c8843a] via-[#a0622a] to-[#7a4520]",
+    subtitleColor: "text-[#7a5c3a]",
+    btnPrimary: "bg-[#8b5e3c] text-white hover:bg-[#6d4a2f] shadow-[#8b5e3c]/30",
+    btnSecondary: "border-[#8b5e3c]/40 text-[#5c3d1e] hover:bg-[#8b5e3c]/10",
+    glowLeft: "bg-[#d4b896] opacity-20",
+    glowRight: "bg-[#c4a07a] opacity-20",
+  },
   
   {
-    id: 1,
+    id: 2,
     badge: "Free Shipping",
     title: "ORDER",
     highlight: "฿999+",
@@ -26,26 +46,6 @@ const slides = [
     btnSecondary: "border-[#8b5e3c]/40 text-[#5c3d1e] hover:bg-[#8b5e3c]/10",
     glowLeft: "bg-[#e8c49a] opacity-20",
     glowRight: "bg-[#d4a86e] opacity-20",
-  },
-  {
-    id: 2,
-    badge: "Members Only",
-    title: "JOIN",
-    highlight: "US NOW",
-    subtitle: "Sign up and unlock exclusive discounts.",
-    sub2: "Early access to new collections.",
-    ctaHref: "/register",
-    image: "/Banner.PNG",
-    bg: "from-[#f9f0e3] via-[#f0e4d0] to-[#e8d5ba]",
-    badgeColor: "bg-[#8b5e3c]/15 border-[#8b5e3c]/30 text-[#5c3d1e]",
-    dotColor: "bg-[#c8a882]",
-    titleColor: "text-[#3d2a1a]",
-    highlightFrom: "from-[#c8843a] via-[#a0622a] to-[#7a4520]",
-    subtitleColor: "text-[#7a5c3a]",
-    btnPrimary: "bg-[#8b5e3c] text-white hover:bg-[#6d4a2f] shadow-[#8b5e3c]/30",
-    btnSecondary: "border-[#8b5e3c]/40 text-[#5c3d1e] hover:bg-[#8b5e3c]/10",
-    glowLeft: "bg-[#d4b896] opacity-20",
-    glowRight: "bg-[#c4a07a] opacity-20",
   },
 ];
 

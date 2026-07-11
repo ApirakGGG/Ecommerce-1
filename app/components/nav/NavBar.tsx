@@ -3,16 +3,14 @@ import Container from "../Container";
 import CartCount from "./CartCount";
 import UserMenu from "./UserMenu";
 import { getCurrentUser } from "@/actions/getCurrentUser";
-import Categories from "./Categories";
 import Image from "next/image";
-import Banner from "./Banner";
 import Menu from "./Menu ";
 
 const NavBar = async () => {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="relative">
+    <>
       {/* Main sticky nav */}
       <div className="sticky top-0 w-full z-30 bg-[#fdf8f3]/90 backdrop-blur-md border-b border-[#e8ddd3] shadow-sm">
         <Container>
@@ -20,11 +18,11 @@ const NavBar = async () => {
           <div className="flex items-center justify-between gap-4 py-3">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2.5 flex-shrink-0 group">
-              <div className="relative w-9 h-9 transition-transform duration-300 group-hover:rotate-12">
-                <Image src="/react.gif" fill alt="Logo" className="object-contain" />
+              <div className="relative w-20 h-20 transition-transform duration-300 group-hover:rotate-12">
+                <Image src="/logo.png" alt="Logo" className="object-contain" width={500} height={500} />
               </div>
               <span className="text-2xl font-black tracking-tight bg-gradient-to-r from-[#5c4a3d] to-[#a0856a] bg-clip-text text-transparent select-none">
-                APPLE
+                Ruby Thrift
               </span>
             </Link>
 
@@ -44,9 +42,7 @@ const NavBar = async () => {
         </div>
       </div>
 
-      {/* Banner below sticky nav */}
-      <Banner currentUser={currentUser} />
-    </div>
+    </>
   );
 };
 

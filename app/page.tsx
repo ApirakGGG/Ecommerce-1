@@ -54,7 +54,7 @@ export default async function Home({ searchParams }: HomeProps) {
                 </p>
               </div>
               <span className="text-xs text-[#a0856a] bg-[#f5ebd9] px-3 py-1.5 rounded-full font-medium">
-                {products.length} items
+                {products.length} ชิ้น
               </span>
             </div>
 
