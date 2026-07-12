@@ -1,9 +1,9 @@
 export const formatPrice =
     (amount: number) => {
         return new Intl.NumberFormat
-        ('en-US', {
+        ('th-TH', {
             style: 'currency',
-            currency: 'USD'
+            currency: 'THB'
         }).format(amount)
     };
     
