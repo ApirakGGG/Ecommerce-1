@@ -94,6 +94,7 @@ const EditProductForm = ({ product }: { product: any }) => {
       brand: product?.brand || "",
       category: product?.category || "",
       inStock: product?.inStock || false,
+      quantity: product?.quantity || 0,
       images: product?.images || [],
       price: product?.price || "",
     },
@@ -297,6 +298,7 @@ const EditProductForm = ({ product }: { product: any }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <Input id="name" label="ชื่อสินค้า *" disabled={isLoading} register={register} errors={errors} required />
             <Input id="price" label="ราคา (Price) *" disabled={isLoading} register={register} errors={errors} type="number" required />
+            <Input id="quantity" label="จำนวน (Quantity) *" disabled={isLoading} register={register} errors={errors} type="number" required />
             <Input id="brand" label="แบรนด์ (Brand) *" disabled={isLoading} register={register} errors={errors} required />
             <div className="flex items-end pb-1">
               <div className="w-full p-3 rounded-lg border border-[#e8ddd3] bg-[#fdf8f3]">

@@ -29,7 +29,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
           className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
         />
         {/* Badge */}
-        {data.inStock ? (
+        {data.inStock && data.quantity > 0 ? (
           <span className="absolute top-3 left-3 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide shadow">
             In Stock
           </span>
@@ -52,7 +52,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         <div className="flex items-center gap-1.5 mt-0.5">
           <StarRating value={productRating} size="small" precision={0.5} />
           <span className="text-xs text-[#a0856a]">
-            ({data.reviews.length})
+            review ({data.reviews.length})
           </span>
         </div>
 

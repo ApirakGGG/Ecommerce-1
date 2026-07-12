@@ -59,6 +59,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({ products })
       brand: product.brand,
       inStock: product.inStock,
       images: product.images,
+      quantity: product.quantity
     }));
   }
 
@@ -81,7 +82,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({ products })
       width: 120,
       renderCell: (params) => (
         <div>
-          {params.row.inStock === true ? (
+          {params.row.quantity > 0 ? (
             <Status text="in stock" icon={MdDone} bg="bg-gray-100" color="text-gray-700" />
           ) : (
             <Status text="out of stock" icon={MdClose} bg="bg-gray-200" color="text-gray-600" />
@@ -95,7 +96,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({ products })
       width: 160,
       renderCell: (params) => (
         <div className="flex items-center gap-2">
-          <ActionBtn icon={MdCached} onClick={() => handleToggleStock(params.row.id, params.row.inStock)} />
+          {/* <ActionBtn icon={MdCached} onClick={() => handleToggleStock(params.row.id, params.row.inStock)} /> */}
           <ActionBtn icon={MdDelete} onClick={() => handleDelete(params.row.id, params.row.images)} />
           <ActionBtn icon={MdRemoveRedEye} onClick={() => router.push(`/product/${params.row.id}`)} />
         </div>

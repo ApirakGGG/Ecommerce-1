@@ -81,7 +81,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
   );
 
   const handleQtyIncrease = useCallback(() => {
-    if (cartProduct.quantity === 99) {
+    if (cartProduct.quantity === 99 || (product.quantity && cartProduct.quantity >= product.quantity)) {
       return;
     }
 
@@ -123,8 +123,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
         <div className="">
           <span className="font-semibold flex gap-2">BRAND: <p className="font-bold">{product.brand}</p></span>
         </div>
-        <div className={product.inStock ? "text-teal-400" : "text-rose-400"}>
-          {product.inStock ? "In Stock" : "Out of Stock"}
+        <div className={product.inStock && product.quantity > 0 ? "text-red-600" : "text-teal-400"}>
+          <span className="text-xs font-bold">{product.inStock && product.quantity > 0 ? `In Stock (${product.quantity} ชิ้น)` : "Out of Stock"}</span>
         </div>
         <div>
           <Horizontal />
@@ -160,7 +160,8 @@ const ProductDetails: React.FC<ProductDetailsProps> = ({ product }) => {
               <Horizontal />
               <div className="max-w-[300px]">
                 <Button
-                  label="ADD TO CART"
+                  label={product.quantity > 0 ? "ADD TO CART" : "SOLD OUT!"}
+                  disabled={!product.inStock || product.quantity <= 0}
                   onClick={() => handleAddProductToCart(cartProduct)}
                 />
               </div>

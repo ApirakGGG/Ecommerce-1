@@ -29,10 +29,17 @@ const CheckoutClient = () => {
   const handleSetPaymentSuccess = useCallback((value: boolean) => {
     setPaymentSuccess(value);
     if (value) {
+      if (paymentIntent) {
+        fetch("/api/order/success", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ paymentIntentId: paymentIntent }),
+        }).catch((err) => console.error("Failed to update order status", err));
+      }
       handleClearCart();
       handleSetPaymentIntent(null);
     }
-  }, [handleClearCart, handleSetPaymentIntent]);
+  }, [handleClearCart, handleSetPaymentIntent, paymentIntent]);
 
   useEffect(() => {
     if (redirectStatus === "succeeded") {

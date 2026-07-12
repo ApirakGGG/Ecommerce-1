@@ -7,7 +7,7 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const currentUser = await getCurrentUser();
-const {id} = await params
+  const {id} = await params
   
   if(!currentUser) return NextResponse.error()
 
@@ -35,7 +35,7 @@ export async function PUT(
 
   try {
     const body = await request.json();
-    const { name, description, price, brand, category, inStock, images } = body;
+    const { name, description, price, brand, category, inStock, quantity, images } = body;
 
     const product = await prisma.product.update({
       where: { id: id },
@@ -44,7 +44,8 @@ export async function PUT(
         description,
         brand,
         category,
-        inStock,
+        inStock: inStock && parseInt(quantity) > 0,
+        quantity: parseInt(quantity),
         images,
         price: parseFloat(price),
       },
