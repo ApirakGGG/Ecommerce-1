@@ -3,248 +3,162 @@ import { Fragment } from "react";
 import Avatar from "../avatar";
 import { SafeUser } from "@/types";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 import { Popover, Transition } from "@headlessui/react";
-import { ChevronDownIcon, PhoneIcon } from "@heroicons/react/20/solid";
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import {
-  ChartPieIcon,
-  ListBulletIcon,
-  SquaresPlusIcon,
-  DocumentMagnifyingGlassIcon,
-  ArrowLeftStartOnRectangleIcon,
-} from "@heroicons/react/24/outline";
+  MdDashboard,
+  MdOutlineShoppingBag,
+  MdOutlineInventory2,
+  MdOutlineAccountCircle,
+  MdLogout,
+  MdLogin,
+  MdPersonAdd,
+} from "react-icons/md";
 
 interface UserMenuProps {
   currentUser: SafeUser | null;
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
-
-  const userProfiles = [
-    {
-      name: "User Profile",
-      href: "/profiles",
-    },
-  ];
-
-  const solutions = [
-    {
-      name: "Dasboard",
-      description: "Get a better understanding of your Dasboard",
-      href: "/admin",
-      icon: ChartPieIcon,
-    },
-    {
-      name: "Add-Products",
-      description:
-        " add descriptive content about the products on a marketplace",
-      href: "../admin/add-products",
-      icon: SquaresPlusIcon,
-    },
-    {
-      name: "Manage-Products",
-      description:
-        " managing information related to products that a business market",
-      href: "../admin/manage-products",
-      icon: DocumentMagnifyingGlassIcon,
-    },
-    {
-      name: "Manage-Orders",
-      description: "Build yourr order for customer",
-      href: "../admin/manage-orders",
-      icon: ListBulletIcon,
-    },
-  ];
-
-  const Usersolutions = [
-    {
-      name: "Home Page",
-
-      href: "/",
-    },
-    {
-      name: "Profiles",
-
-      href: "/profiles",
-    },
-    {
-      name: "Cart",
-
-      href: "/cart",
-    },
-    {
-      name: "Orders",
-
-      href: "/orders",
-    },
-  ];
-
-  const callsToAction = [
-    { name: "Contact ", href: "/contact", icon: PhoneIcon },
-    { name: "SignOut ", onClick: signOut, icon: ArrowLeftStartOnRectangleIcon },
-  ];
-
-  const UseToAction = [
-    { name: "Log In ", href: "/login" },
-    { name: "Register ", href: "/register" },
-  ];
-
-  const allowedSolutionNames = [
-    "Dasboard",
-    "Add-Products",
-    "Manage-Products",
-    "Manage-Orders",
-  ];
-
-  const adminSolutions = solutions.filter((item) =>
-    currentUser?.role === "ADMIN"
-      ? true
-      : allowedSolutionNames.includes(item.name)
-  );
-
   return (
-    <Popover className="relative z-10 ">
-      <Popover.Button className="inline-flex z-10  items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900 mt-1 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300">
-        <Avatar src={currentUser?.image} />
-        <span className="font-semibold ml-3">{currentUser?.name}</span>
-        <ChevronDownIcon
-          className="h-5 w-5 animate-bounce animate-duration-[2000ms]"
-          aria-hidden="true"
-        />
-      </Popover.Button>
+    <Popover className="relative z-50">
+      {({ open, close }) => (
+        <>
+          <Popover.Button className="flex items-center gap-2 px-1.5 py-1.5 md:px-3 md:py-2 bg-white rounded-full border border-[#e8ddd3] hover:shadow-md hover:border-[#c8a882] transition-all duration-200 outline-none max-w-[150px] md:max-w-xs group cursor-pointer">
+            <div className="w-8 h-8 rounded-full overflow-hidden bg-gray-100 flex-shrink-0 flex items-center justify-center">
+              <Avatar src={currentUser?.image} />
+            </div>
+            <span className="hidden sm:block text-sm font-semibold text-[#4a3b2c] truncate">
+              {currentUser?.name || "สมาชิก"}
+            </span>
+            <ChevronDownIcon
+              className={`h-4 w-4 text-[#a0856a] transition-transform duration-200 ${
+                open ? "rotate-180" : "group-hover:translate-y-0.5"
+              }`}
+            />
+          </Popover.Button>
 
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-200"
-        enterFrom="opacity-0 translate-y-1"
-        enterTo="opacity-100 translate-y-0"
-        leave="transition ease-in duration-150"
-        leaveFrom="opacity-100 translate-y-0"
-        leaveTo="opacity-0 translate-y-1"
-      >
-        <Popover.Panel className="absolute right-0 z-10 mt-5 flex w-screen max-w-max translate-x-0 px-5">
-          <div className="w-full max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-2 ring-yellow-500   ">
-            <div className="p-4">
-              {currentUser &&
-                userProfiles.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
-                  >
-                    <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <Avatar src={currentUser?.image} />
-                    </div>
-                    <div>
-                      <a
-                        href={item.href}
-                        className="font-semibold text-gray-900"
-                      >
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </a>
-                      <p className="mt-1 text-gray-600">{currentUser?.name}</p>
-                    </div>
+          <Transition
+            as={Fragment}
+            enter="transition ease-out duration-100"
+            enterFrom="transform opacity-0 scale-95 translate-y-2"
+            enterTo="transform opacity-100 scale-100 translate-y-0"
+            leave="transition ease-in duration-75"
+            leaveFrom="transform opacity-100 scale-100 translate-y-0"
+            leaveTo="transform opacity-0 scale-95 translate-y-2"
+          >
+            <Popover.Panel className="absolute right-0 mt-2 w-72 origin-top-right rounded-2xl bg-white shadow-xl shadow-[#e8ddd3]/60 border border-[#e8ddd3] overflow-hidden focus:outline-none">
+              {!currentUser ? (
+                /* ── Logged Out State ── */
+                <div className="p-3 space-y-1">
+                  <div className="px-3 py-2 mb-2 text-xs font-medium text-gray-500">
+                    ยินดีต้อนรับสู่ Ruby Thrift!
                   </div>
-                ))}
-            </div>
-            {currentUser && <hr className="underline" />}
-
-            <div className="p-4">
-              {currentUser?.role === "ADMIN" &&
-                adminSolutions.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
+                  <Link
+                    href="/login"
+                    onClick={() => close()}
+                    className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-[#4a3b2c] rounded-xl hover:bg-[#fdf8f3] hover:text-[#a0856a] transition-all"
                   >
-                    <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
-                      <item.icon
-                        className="h-6 w-6 text-gray-600 group-hover:text-indigo-600"
-                        aria-hidden="true"
-                      />
-                    </div>
-                    <div>
-                      <a
-                        href={item.href}
-                        className="font-semibold text-gray-900"
-                      >
-                        {item.name}
-                        <span className="absolute inset-0" />
-                      </a>
-                      <p className="mt-1 text-gray-600">{item.description}</p>
-                    </div>
+                    <MdLogin size={20} />
+                    เข้าสู่ระบบ (Login)
+                  </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => close()}
+                    className="flex items-center gap-3 w-full px-4 py-3 text-sm font-bold text-[#4a3b2c] rounded-xl hover:bg-[#fdf8f3] hover:text-[#a0856a] transition-all"
+                  >
+                    <MdPersonAdd size={20} />
+                    สมัครสมาชิก (Register)
+                  </Link>
+                </div>
+              ) : (
+                /* ── Logged In State ── */
+                <div className="flex flex-col">
+                  {/* Header / Info */}
+                  <div className="px-5 py-4 border-b border-[#e8ddd3] bg-[#fdf8f3]">
+                    <p className="text-sm font-bold text-[#4a3b2c] truncate">
+                      {currentUser.name}
+                    </p>
+                    <p className="text-xs text-[#a0856a] truncate mt-0.5 font-medium">
+                      {currentUser.email}
+                    </p>
                   </div>
-                ))}
-            </div>
 
-            <div className="p-2 items-start">
-              {currentUser &&
-                Usersolutions.map((item) => (
-                  <div
-                    key={item.name}
-                    className="group relative flex gap-x-6 rounded-lg p-2 hover:bg-gray-50 ease-in-out delay-150  hover:-translate-y-1 hover:scale-110  duration-300"
-                  >
-                    <div className="mt-1 flex h-2 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white"></div>
-                    <div>
-                      <a
-                        href={item.href}
-                        className="font-semibold text-gray-900 "
-                      >
-                        {item.name}
-                        <span className="absolute inset-0 " />
-                      </a>
-                    </div>
+                  {/* Normal User Menu */}
+                  <div className="p-2 space-y-0.5 border-b border-[#e8ddd3]">
+                    <Link
+                      href="/profiles"
+                      onClick={() => close()}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-semibold text-[#4a3b2c] rounded-xl hover:bg-[#fdf8f3] transition-colors"
+                    >
+                      <MdOutlineAccountCircle size={20} className="text-[#a0856a]" />
+                      โปรไฟล์ของฉัน
+                    </Link>
+                    <Link
+                      href="/orders"
+                      onClick={() => close()}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-semibold text-[#4a3b2c] rounded-xl hover:bg-[#fdf8f3] transition-colors"
+                    >
+                      <MdOutlineShoppingBag size={20} className="text-[#a0856a]" />
+                      ประวัติการสั่งซื้อ
+                    </Link>
                   </div>
-                ))}
-            </div>
 
-            <div className="grid grid-cols-2 divide-x divide-gray-900/5 bg-gray-50 items-center cursor-pointer">
-              {currentUser &&
-                callsToAction.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={item.onClick as any}
-                    className="flex items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-red-200 rounded-full"
-                  >
-                    <item.icon
-                      className="h-5 w-5 flex-none text-green-950"
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
-                ))}
-            </div>
+                  {/* Admin Only Menu */}
+                  {currentUser.role === "ADMIN" && (
+                    <div className="p-2 space-y-0.5 border-b border-[#e8ddd3] bg-amber-50/30">
+                      <div className="px-3 py-1.5 mb-1 text-[10px] font-bold text-amber-600 uppercase tracking-widest flex items-center gap-2">
+                        <div className="h-px bg-amber-200 flex-1"></div>
+                        Admin Tools
+                        <div className="h-px bg-amber-200 flex-1"></div>
+                      </div>
+                      <Link
+                        href="/admin"
+                        onClick={() => close()}
+                        className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-amber-900 rounded-xl hover:bg-amber-100/50 transition-colors"
+                      >
+                        <MdDashboard size={20} className="text-amber-600" />
+                        แดชบอร์ด
+                      </Link>
+                      <Link
+                        href="/admin/manage-products"
+                        onClick={() => close()}
+                        className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-amber-900 rounded-xl hover:bg-amber-100/50 transition-colors"
+                      >
+                        <MdOutlineInventory2 size={20} className="text-amber-600" />
+                        จัดการสินค้าทั้งหมด
+                      </Link>
+                      <Link
+                        href="/admin/manage-orders"
+                        onClick={() => close()}
+                        className="flex items-center gap-3 w-full px-3 py-2 text-sm font-medium text-amber-900 rounded-xl hover:bg-amber-100/50 transition-colors"
+                      >
+                        <MdOutlineShoppingBag size={20} className="text-amber-600" />
+                        จัดการออเดอร์ลูกค้า
+                      </Link>
+                    </div>
+                  )}
 
-            <div className="items-center text-center left-5 ">
-              {!currentUser && (
-                <a href="">
-                  Click <span className="underline text-blue-400">Login</span>{" "}
-                  <span>or</span>{" "}
-                  <span className="underline text-blue-400">Register.</span>{" "}
-                </a>
+                  {/* Logout Footer */}
+                  <div className="p-2">
+                    <button
+                      onClick={() => {
+                        signOut();
+                        close();
+                      }}
+                      className="flex items-center gap-3 w-full px-3 py-2.5 text-sm font-bold text-red-600 rounded-xl hover:bg-red-50 transition-colors"
+                    >
+                      <MdLogout size={20} className="text-red-500" />
+                      ออกจากระบบ
+                    </button>
+                  </div>
+                </div>
               )}
-            </div>
-
-            <div className="group relative flex gap-x-6 rounded-lg p-4 hover:bg-gray-50 ">
-              {!currentUser &&
-                UseToAction.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className="flex flex-none items-center justify-center gap-x-2.5 p-3 font-semibold text-gray-900 hover:bg-gray-100 border border-yellow-500 rounded-md"
-                  >
-                    <div className="items-center justify-center text-balance">
-                      <ChevronDownIcon
-                        className="h-5 w-5 animate-bounce animate-duration-[2000ms] items-center place-items-center"
-                        aria-hidden="true"
-                      />
-                      {item.name}
-                    </div>
-                  </a>
-                ))}
-            </div>
-          </div>
-        </Popover.Panel>
-      </Transition>
+            </Popover.Panel>
+          </Transition>
+        </>
+      )}
     </Popover>
   );
 };
