@@ -39,6 +39,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 
 const hrefMap: Record<string, string> = {
   หน้าแรก: "/",
+  สินค้าทั้งหมด: "/products",
   เกี่ยวกับเรา: "/about",
   ติดต่อเรา: "/contact",
 };
@@ -46,7 +47,7 @@ const hrefMap: Record<string, string> = {
 const Menu = () => {
   const pathname = usePathname();
 
-  const allowedPaths = ["/", "/about", "/contact"];
+  const allowedPaths = ["/", "/about", "/contact", "/products"];
   if (!allowedPaths.includes(pathname ?? "")) return null;
 
   return (
