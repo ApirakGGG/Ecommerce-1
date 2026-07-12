@@ -97,7 +97,7 @@ const ManageProductsClient: React.FC<ManageProductsClientProps> = ({ products })
         <div className="flex items-center gap-2">
           <ActionBtn icon={MdCached} onClick={() => handleToggleStock(params.row.id, params.row.inStock)} />
           <ActionBtn icon={MdDelete} onClick={() => handleDelete(params.row.id, params.row.images)} />
-          <ActionBtn icon={MdRemoveRedEye} onClick={() => router.push(`product/${params.row.id}`)} />
+          <ActionBtn icon={MdRemoveRedEye} onClick={() => router.push(`/product/${params.row.id}`)} />
         </div>
       ),
     },
