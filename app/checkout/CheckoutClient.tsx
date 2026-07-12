@@ -14,7 +14,7 @@ const stripePromise = loadStripe(
 );
 
 const CheckoutClient = () => {
-  const { cartProducts, paymentIntent, handleSetPaymentIntent } = useCart();
+  const { cartProducts, paymentIntent, handleSetPaymentIntent, handleClearCart } = useCart();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [clientSecret, setClientSecret] = useState();
@@ -69,7 +69,11 @@ const CheckoutClient = () => {
 
   const handleSetPaymentSuccess = useCallback((value: boolean) => {
     setPaymentSuccess(value);
-  }, []);
+    if (value) {
+      handleClearCart();
+      handleSetPaymentIntent(null);
+    }
+  }, [handleClearCart, handleSetPaymentIntent]);
 
   return (
     <div className="w-full">

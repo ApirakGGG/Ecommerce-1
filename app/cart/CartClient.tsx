@@ -8,24 +8,25 @@ import ItemContent from "./ItemContent";
 import { formatPrice } from "@/untils/formatPrice";
 import { SafeUser } from "@/types";
 import { useRouter } from "next/navigation";
+import ProductCard from "../components/products/ProductCard";
 
 interface CartClientProps {
   currentUser: SafeUser | null;
+  recommendedProducts?: any[];
 }
 
-const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
+const CartClient: React.FC<CartClientProps> = ({ currentUser, recommendedProducts = [] }) => {
   const { cartProducts, handleClearCart, cartTotalAmount } = useCart();
   const router = useRouter();
 
   const subtotal = cartTotalAmount;
-  const taxRate = 0.07;
   const shippingRate = 0.01;
-  const promotionRate = 0.10;
+  const isMonday = new Date().getDay() === 1;
+  const promotionRate = isMonday ? 0.10 : 0.0;
 
-  const taxAmount = subtotal * taxRate;
   const shippingAmount = subtotal * shippingRate;
   const promotionDiscountAmount = subtotal * promotionRate;
-  const totalAmount = subtotal + taxAmount + shippingAmount - promotionDiscountAmount;
+  const totalAmount = subtotal + shippingAmount - promotionDiscountAmount;
 
   // ── EMPTY STATE ──────────────────────────────────────────────────
   if (!cartProducts || cartProducts.length === 0) {
@@ -43,13 +44,38 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
         <p className="text-gray-400 text-sm mb-8 text-center max-w-xs">
           Looks like you haven&apos;t added anything yet. Start browsing our collection!
         </p>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 bg-gray-900 text-white px-7 py-3 rounded-2xl font-semibold text-sm hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-        >
-          <MdArrowBack size={18} />
-          Start Shopping
-        </Link>
+        <div className="mb-8 p-1">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-2 bg-gray-900 text-white px-7 py-3 rounded-2xl font-semibold text-sm hover:bg-gray-700 transition-all duration-200 shadow-lg hover:shadow-xl hover:-translate-y-0.5"
+          >
+            <MdArrowBack size={18} />
+            Start Shopping
+          </Link>
+        </div>
+
+        {recommendedProducts.length > 0 && (
+          <div className="w-full mt-5 max-w-6xl mx-auto px-4 border-t border-gray-100 pt-10">
+            <div className="flex flex-col items-center mb-8">
+              <span className="text-sm font-semibold tracking-wider text-[#a0856a] uppercase mb-2">
+                You might also like
+              </span>
+              <h3 className="text-2xl font-bold text-gray-900 text-center">
+                สินค้าแนะนำสำหรับคุณ
+              </h3>
+              <div className="h-1 w-16 bg-[#a0856a] mt-4 rounded-full"></div>
+            </div>
+            
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 w-full">
+              {recommendedProducts
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 5)
+                .map((product: any) => (
+                  <ProductCard data={product} key={product.id} />
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     );
   }
@@ -123,19 +149,16 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
               <div className="flex justify-between text-sm text-gray-600">
                 <span className="flex items-center gap-1.5">
                   <TbRosetteDiscount size={16} className="text-green-500" />
-                  Promotion (10%)
+                  Promotion (Monday 10%)
                 </span>
-                <span className="font-semibold text-green-600">−{formatPrice(promotionDiscountAmount)}</span>
+                <span className="font-semibold text-green-600">
+                  {promotionDiscountAmount > 0 ? `−${formatPrice(promotionDiscountAmount)}` : formatPrice(0)}
+                </span>
               </div>
 
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Shipping (1%)</span>
                 <span className="font-semibold text-gray-900">+{formatPrice(shippingAmount)}</span>
-              </div>
-
-              <div className="flex justify-between text-sm text-gray-600">
-                <span>VAT (7%)</span>
-                <span className="font-semibold text-gray-900">+{formatPrice(taxAmount)}</span>
               </div>
 
               <div className="border-t border-gray-100 my-1" />
@@ -146,7 +169,7 @@ const CartClient: React.FC<CartClientProps> = ({ currentUser }) => {
               </div>
 
               <p className="text-xs text-gray-400 -mt-1">
-                Taxes and shipping calculated at checkout
+                Shipping calculated at checkout. Discount applied on Mondays.
               </p>
             </div>
 

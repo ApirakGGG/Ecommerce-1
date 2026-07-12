@@ -9,12 +9,16 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 });
 
 const calculateOrderAmount = (items: CartProductType[]) => {
-  const totalPrice = items.reduce((acc, item) => {
+  const subtotal = items.reduce((acc, item) => {
     const itemTotal = item.price * item.quantity;
     return acc + itemTotal;
   }, 0);
 
-  return totalPrice;
+  const shippingAmount = subtotal * 0.01;
+  const isMonday = new Date().getDay() === 1;
+  const promotionDiscountAmount = isMonday ? (subtotal * 0.10) : 0;
+
+  return subtotal + shippingAmount - promotionDiscountAmount;
 };
 
 export async function POST(request: Request) {

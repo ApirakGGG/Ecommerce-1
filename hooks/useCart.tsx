@@ -153,7 +153,7 @@ export const CartContextProvider = (props: Props) => {
         }
 
         setCartProducts(updatedCart);
-        localStorage.setItem("APPLECartItems", JSON.stringify(updatedCart));
+        localStorage.setItem("eShopCartItems", JSON.stringify(updatedCart));
       }
     },
     [cartProducts]
@@ -162,7 +162,7 @@ export const CartContextProvider = (props: Props) => {
   const handleClearCart = useCallback(() => {
     setCartProducts(null);
     setCartTotalQty(0);
-    localStorage.setItem("APPLECartItems", JSON.stringify(null));
+    localStorage.setItem("eShopCartItems", JSON.stringify(null));
 
   }, [cartProducts]);
 
