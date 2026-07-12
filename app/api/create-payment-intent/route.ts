@@ -29,13 +29,13 @@ export async function POST(request: Request) {
   const totalDollars = calculateOrderAmount(items);
   const totalCents = totalDollars * 100;
 
-  if (totalCents < 50) {
-    return NextResponse.json({ error: "Order amount is too low" }, { status: 400 });
+  if (totalCents < 1000) {
+    return NextResponse.json({ error: "Order amount is too low (minimum 10 THB)" }, { status: 400 });
   }
   const orderData = {
     user: { connect: { id: currentUser.id } },
     amount: totalDollars,
-    currency: "usd",
+    currency: "thb",
     status: "pending",
     deliveryStatus: "pending",
     paymentIntentId: payment_intent_id,
@@ -80,7 +80,7 @@ export async function POST(request: Request) {
     //create the intent
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalCents,
-      currency: "usd",
+      currency: "thb",
       automatic_payment_methods: { enabled: true },
     });
 
