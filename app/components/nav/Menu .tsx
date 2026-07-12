@@ -52,7 +52,7 @@ const Menu = () => {
   return (
     <div className="border-t bg-transparent border-[#e8ddd3] ">
       <Container>
-        <div className="flex items-center gap-1 py-2 overflow-x-auto scrollbar-hide">
+        <div className="flex items-center gap-1 py-2 overflow-x-auto md:overflow-visible scrollbar-hide">
           {menu.map((item) => (
             <MenuItem
               key={item.label}
