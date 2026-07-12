@@ -3,7 +3,7 @@
 import { useCart } from "@/hooks/useCart";
 import { Elements } from "@stripe/react-stripe-js";
 import { StripeElementsOptions, loadStripe } from "@stripe/stripe-js";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import CheckoutForm from "./CheckoutForm";
@@ -21,8 +21,25 @@ const CheckoutClient = () => {
   const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectStatus = searchParams?.get('redirect_status');
 
   const hasFetched = useRef(false);
+
+  const handleSetPaymentSuccess = useCallback((value: boolean) => {
+    setPaymentSuccess(value);
+    if (value) {
+      handleClearCart();
+      handleSetPaymentIntent(null);
+    }
+  }, [handleClearCart, handleSetPaymentIntent]);
+
+  useEffect(() => {
+    if (redirectStatus === "succeeded") {
+      handleSetPaymentSuccess(true);
+      toast.success("Payment completed successfully!");
+    }
+  }, [redirectStatus, handleSetPaymentSuccess]);
 
   useEffect(() => {
     if (cartProducts && !hasFetched.current) {
@@ -46,8 +63,20 @@ const CheckoutClient = () => {
           return res.json();
         })
         .then((data) => {
-          setClientSecret(data.paymentIntent.client_secret);
-          handleSetPaymentIntent(data.paymentIntent.id);
+          if (data?.error) {
+            setError(true);
+            toast.error(data.error);
+            hasFetched.current = false;
+            return;
+          }
+          if (data?.paymentIntent?.client_secret) {
+            setClientSecret(data.paymentIntent.client_secret);
+            handleSetPaymentIntent(data.paymentIntent.id);
+          } else {
+            setError(true);
+            toast.error("Invalid response from server");
+            hasFetched.current = false;
+          }
         })
         .catch((error) => {
           setError(true);
@@ -67,13 +96,6 @@ const CheckoutClient = () => {
     },
   };
 
-  const handleSetPaymentSuccess = useCallback((value: boolean) => {
-    setPaymentSuccess(value);
-    if (value) {
-      handleClearCart();
-      handleSetPaymentIntent(null);
-    }
-  }, [handleClearCart, handleSetPaymentIntent]);
 
   return (
     <div className="w-full">

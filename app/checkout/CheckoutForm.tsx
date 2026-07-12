@@ -50,6 +50,9 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     stripe
       .confirmPayment({
         elements,
+        confirmParams: {
+          return_url: `${window.location.origin}/checkout`,
+        },
         redirect: "if_required",
       })
       .then((result) => {
@@ -59,6 +62,8 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
           handleClearCart();
           handleSetPaymentSuccess(true);
           handleSetPaymentIntent(null);
+        } else {
+          toast.error(result.error.message || "Payment failed");
         }
 
         setIsLoading(false);
