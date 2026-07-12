@@ -52,18 +52,22 @@ const Menu = () => {
   return (
     <div className="border-t bg-transparent border-[#e8ddd3] ">
       <Container>
-        <div className="flex items-center gap-1 py-2 overflow-x-auto md:overflow-visible scrollbar-hide">
-          {menu.map((item) => (
-            <MenuItem
-              key={item.label}
-              label={item.label}
-              icon={item.icon}
-              href={hrefMap[item.label] ?? "/"}
-              active={pathname === (hrefMap[item.label] ?? "/")}
-            />
-          ))}
-          {/* Search bar */}
-          <div className="hidden md:flex flex-1 max-w-xl mx-4">
+        <div className="flex items-center w-full justify-between gap-4 py-2">
+          {/* Menu Items (scrollable horizontally) */}
+          <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide max-w-full">
+            {menu.map((item) => (
+              <MenuItem
+                key={item.label}
+                label={item.label}
+                icon={item.icon}
+                href={hrefMap[item.label] ?? "/"}
+                active={pathname === (hrefMap[item.label] ?? "/")}
+              />
+            ))}
+          </div>
+
+          {/* Search bar (isolated from overflow) */}
+          <div className="hidden md:flex flex-1 max-w-xl w-full">
             <SearchBar />
           </div>
         </div>
