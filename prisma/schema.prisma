@@ -63,9 +63,10 @@ model Review {
   productId   String   @db.ObjectId
   rating      Int
   comment     String
+  image       String?
   createdDate DateTime @default(now())
 
-  product Product @relation(fields: [productId], references: [id])
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

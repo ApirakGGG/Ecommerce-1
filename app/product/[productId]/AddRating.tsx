@@ -4,12 +4,15 @@ import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/products/Button";
 import { SafeUser } from "@/types";
 import StarRating from "@/app/components/products/StarRating";
-import {Review, order, Product} from "@/prisma/generated/client";
+import { Review, order, Product } from "@/prisma/generated/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { useDropzone } from "react-dropzone";
+import { getDownloadURL, getStorage, ref, uploadBytesResumable } from "firebase/storage";
+import firebaseApp from "@/libs/firebase";
 
 interface AddRatingProps {
   product: Product & {
@@ -24,6 +27,7 @@ interface AddRatingProps {
 
 const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const router = useRouter();
 
   const {
@@ -50,28 +54,66 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
     });
   };
 
+  const onDrop = (acceptedFiles: File[]) => {
+    if (acceptedFiles.length > 0) {
+      setSelectedFile(acceptedFiles[0]);
+    }
+  };
+
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: { "image/*": [".jpeg", ".png", ".jpg"] },
+  });
+
   const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     setIsLoading(true);
     if (data.rating === 0) {
       setIsLoading(false);
       return toast.error("No Rating Selected");
     }
-    const ratingData = { ...data, userId: user?.id, product: product };
 
-    axios
-      .post("/api/rating", ratingData)
-      .then(() => {
-        toast.success("Rating submitted");
-        router.refresh();
-        reset();
-      })
-      .catch((error) => {
-        toast.error("Something went wrong");
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-    console.log(data);
+    try {
+      let imageUrl = null;
+
+      if (selectedFile) {
+        toast("Uploading image...");
+        const fileName = new Date().getTime() + "-" + selectedFile.name;
+        const storage = getStorage(firebaseApp);
+        const storageRef = ref(storage, `reviews/${fileName}`);
+        const uploadTask = uploadBytesResumable(storageRef, selectedFile);
+        
+        await new Promise<void>((resolve, reject) => {
+          uploadTask.on(
+            "state_changed",
+            () => {},
+            (error) => {
+              reject(error);
+            },
+            () => {
+              getDownloadURL(uploadTask.snapshot.ref)
+                .then((url) => {
+                  imageUrl = url;
+                  resolve();
+                })
+                .catch(reject);
+            }
+          );
+        });
+      }
+
+      const ratingData = { ...data, image: imageUrl, userId: user?.id, product: product };
+
+      await axios.post("/api/rating", ratingData);
+      
+      toast.success("Rating submitted");
+      setSelectedFile(null);
+      reset();
+      router.refresh();
+    } catch (error) {
+      toast.error("Something went wrong");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   if (!user || !product) return null;
@@ -108,10 +150,33 @@ const AddRating: React.FC<AddRatingProps> = ({ product, user }) => {
         errors={errors}
         required
       />
-      <Button
-        label={isLoading ? "Loading" : "Rating Product"}
-        onClick={handleSubmit(onSubmit)}
-      />
+      
+      <div className="mt-2 text-sm">Add Photo (Optional)</div>
+      <div
+        {...getRootProps()}
+        className={`border-2 border-dashed p-4 rounded-lg cursor-pointer text-center transition-colors ${
+          isDragActive ? "border-[#a0856a] bg-[#fdf8f3]" : "border-slate-300 text-slate-500 hover:bg-slate-50"
+        }`}
+      >
+        <input {...getInputProps()} />
+        {selectedFile ? (
+          <div className="text-green-600 font-medium whitespace-nowrap overflow-hidden text-ellipsis px-2">
+            {selectedFile.name}
+          </div>
+        ) : isDragActive ? (
+          <p className="text-[#a0856a]">Drop the image here...</p>
+        ) : (
+          <p>Click or drag image to upload</p>
+        )}
+      </div>
+
+      <div className="mt-4">
+        <Button
+          label={isLoading ? "Uploading..." : "Rating Product"}
+          onClick={handleSubmit(onSubmit)}
+          disabled={isLoading}
+        />
+      </div>
     </div>
   );
 };

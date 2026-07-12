@@ -35,8 +35,8 @@ const user = await getCurrentUser()
         <ProductDetails product={product as any} id={params as string}  />
         <div className="flex flex-col mt-20 gap-4">
           <div className="font-bold">ADD Rating</div>
-          <AddRating product= {product} user={user} />
-          <ListRating product={product} />
+          <AddRating product={product} user={user} />
+          <ListRating product={product} user={user} />
         </div>
       </Container>
     </div>
