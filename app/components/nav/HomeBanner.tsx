@@ -32,7 +32,7 @@ const slides = [
     badge: "Free Shipping",
     title: "ORDER",
     highlight: "฿399+",
-    subtitle: "รับสิทธิ์จัดส่งฟรีสำหรับทุกคำสั่งซื้อที่มียอดรวมเกิน 999 บาท",
+    subtitle: "รับสิทธิ์จัดส่งฟรีสำหรับทุกคำสั่งซื้อที่มียอดรวมเกิน 399 บาท",
     sub2: "ระยะเวลาจำกัดช้อปเลยก่อนหมด!",
     ctaHref: "/products",
     image: "/Banner.PNG",
