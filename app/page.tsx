@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: HomeProps) {
             <div className="flex items-center justify-between mb-6">
               <div>
                 <h2 className="text-2xl font-bold text-[#4a3b2c] tracking-tight">
-                  สินค้าแนะนำ
+                  สินค้า
                 </h2>
                 <p className="text-sm text-[#a0856a] mt-1">
                   พบกับสินค้าล่าสุดของเรา
