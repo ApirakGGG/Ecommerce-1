@@ -79,7 +79,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   ];
 
   const callsToAction = [
-    { name: "Contact ", href: "/sendemail", icon: PhoneIcon },
+    { name: "Contact ", href: "/contact", icon: PhoneIcon },
     { name: "SignOut ", onClick: signOut, icon: ArrowLeftStartOnRectangleIcon },
   ];
 

@@ -64,7 +64,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ currentUser }) => {
 
   return (
     <>
-      <Heading title="APPLE SIGN IN" />
+      <Heading title="Ruby Thrift" />
       <Button
         outline
         label="CONTINUE WITH GOOGLE"
